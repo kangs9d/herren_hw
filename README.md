@@ -20,6 +20,7 @@ curl --location --request POST 'localhost:8000/api/v1/subscribe' \
 curl --location --request POST 'localhost:8000/api/v1/unsubscribe' \
 --header 'Content-Type: application/x-www-form-urlencoded' \
 --data-urlencode 'email=<my_email>'
+
 3. sendEmail API : POST send_email
 
 curl --location --request POST 'localhost:8000/api/v1/mail' \
