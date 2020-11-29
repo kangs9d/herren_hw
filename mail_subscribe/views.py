@@ -3,12 +3,12 @@ import multiprocessing
 
 import requests
 from django.http import HttpResponse
-from django.shortcuts import render
 from rest_framework import status
 from herren_hw import settings
 import django
 
 django.setup()
+
 from mail_subscribe.models import MailingList
 
 
