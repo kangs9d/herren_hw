@@ -69,13 +69,30 @@ def divide_queryset_with_content(seq, content, num):
 def process_mailing(queryset_and_content):
     for elem in queryset_and_content.get('queryset'):
         email = elem.user_email
-        external_herren_url = settings.MAILING_API_URL + 'api/v1/mail'
+        host = email.split("@")[1]
         subject = queryset_and_content.get('content')[0]
         content = queryset_and_content.get('content')[1]
         post_data = {'mailto': email, 'subject': subject, 'content': content}
-        headers = {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'herren-recruit-python'}
-        res = requests.post(external_herren_url, headers=headers, data=post_data)
+        if not host in settings.V2_HOST:
+            external_herren_url = settings.MAILING_API_URL + 'api/v1/mail'
+            headers = {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'herren-recruit-python'}
+            res = requests.post(external_herren_url, headers=headers, data=post_data)
+        else:
+            external_herren_url = settings.MAILING_API_URL + 'api/v2/mail'
+            headers = {'Content-Type': 'application/json', 'Authorization': 'herren-recruit-python'}
+            res = requests.post(external_herren_url, headers=headers, data=json.dumps(post_data))
         resp = json.loads(res.text)
         if not resp.get('status') == 'success':
             return False
     return True
+
+
+def check_inbox(request):
+    if request.method != 'POST':
+        return HttpResponse('method not allowed', status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    email = request.POST.get('email')
+    external_herren_url = settings.MAILING_API_URL + 'api/v1/inbox/' + email
+
+    headers = {'Authorization': 'herren-recruit-python'}
+    res = requests.get(external_herren_url, headers=headers)
+    return res

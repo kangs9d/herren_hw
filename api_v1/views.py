@@ -19,3 +19,7 @@ def unsubscribe(request):
 @csrf_exempt
 def send_email(request):
     return mailing.send_email(request)
+
+
+def check_inbox(request):
+    return mailing.check_inbox(request)

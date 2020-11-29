@@ -16,7 +16,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 MAILING_API_URL = "http://python.recruit.herrencorp.com/"
-
+V2_HOST = ['gmail.com', 'naver.com']
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
