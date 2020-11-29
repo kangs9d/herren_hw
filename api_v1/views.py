@@ -13,6 +13,6 @@ def subscribe(request):
 def unsubscribe(request):
     return mailing.unsubscribe(request)
 
-
+@csrf_exempt
 def send_email(request):
     return mailing.send_email(request)
